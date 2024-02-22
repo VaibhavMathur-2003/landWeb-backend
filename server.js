@@ -1,39 +1,50 @@
-// app.js
-
-const express = require('express');
-const mongoose = require('mongoose');
-require('dotenv').config();
-
-const authRoutes = require('./Routes/Auth');
-const webpageRoutes = require('./Routes/Webpage');
-
+import express from 'express';
+import mongoose from 'mongoose';
+import cors from 'cors';
+import path from 'path';
+// import uiRoute from './ui/ui.route';
+import pageRoute from './page/page.route';
+// import assetRoute from './assets/assets.route';
+// import renderHtml from './render/render.controller';
+//Initialize App
 const app = express();
-
-// Middleware
 app.use(express.json());
+const corsOptions = {
+  origin: function (origin, callback) {
+    callback(null, true);
+  },
+};
 
-// Connect to MongoDB
-mongoose.connect(process.env.MONGODB_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false
-})
-.then(() => console.log('Connected to MongoDB'))
-.catch(err => console.error('Error connecting to MongoDB:', err));
+corsOptions.credentials = true;
+app.use(cors(corsOptions));
 
-// Routes
-app.use('/api/auth', authRoutes);
-app.use('/api/webpages', webpageRoutes);
+//HTML and Static file
+app.use('/resources', express.static(path.join(__dirname, 'public')));
+app.set('views', `views`);
+app.set('view engine', 'hbs');
 
-// Error handler
-app.use((err, req, res, next) => {
-  console.error(err.stack);
-  res.status(500).send('Server Error');
-});
+const mongoUri = 'mongodb+srv://mathurvaibhav010:PjLYtMuYQWPTnmGc@cluster0.lplwtyd.mongodb.net/?retryWrites=true&w=majority';
+mongoose.connect(
+  mongoUri,
+  {
+    useCreateIndex: true,
+    useFindAndModify: false,
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  },
+  (err) => {
+    if (err) throw err;
+    console.log('Connected to MongoDB');
+  },
+);
+// app.use('/api/projects', projectRoute);
+app.use('/api/pages', pageRoute);
+// app.use('/api/assets', assetRoute);
+// app.use('/api/', uiRoute);
+// app.get('/:pageId?', renderHtml);
 
-// Start server
-const PORT = process.env.PORT || 3000;
+const PORT = process.env.APP_PORT || 5000;
 app.listen(PORT, () => {
-  console.log(`Server running on port ${PORT}`);
+  console.log(`server is running on port ${PORT}`);
 });
+
