@@ -7,7 +7,7 @@ import {
   details,
   list,
   loadContent,
-} from './page.controller';
+} from '../Controllers/page.controller';
 
 const pageRoute = express.Router();
 pageRoute.post('/', create);

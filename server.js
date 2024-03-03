@@ -3,7 +3,7 @@ import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
 // import uiRoute from './ui/ui.route';
-import pageRoute from './page/page.route';
+import pageRoute from './Routes/page.route';
 // import assetRoute from './assets/assets.route';
 // import renderHtml from './render/render.controller';
 //Initialize App

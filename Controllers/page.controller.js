@@ -5,7 +5,7 @@ import {
   pageDetails,
   savePageContent,
   updatePage,
-} from './page.services';
+} from '../page/page.services';
 
 export const create = async (req, res) => {
   const pageBody = req.body;

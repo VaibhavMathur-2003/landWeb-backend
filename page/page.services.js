@@ -1,4 +1,4 @@
-import Pages from './page.modal';
+import Pages from '../Models/page.modal';
 
 export const createPage = async (pageBody) => {
   const slug = pageBody.name.toLowerCase().split(' ').join('-');

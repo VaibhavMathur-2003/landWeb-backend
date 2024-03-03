@@ -14,10 +14,12 @@ const Page = new mongoose.Schema(
       required: true,
     },
     content: Object,
+    
   },
   {
     timestamps: true,
   },
+    
 );
 
 export default mongoose.model('Pages', Page);
