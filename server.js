@@ -4,6 +4,7 @@ import cors from 'cors';
 import path from 'path';
 // import uiRoute from './ui/ui.route';
 import pageRoute from './Routes/page.route';
+const userRoute = require('./Routes/user.route.js');
 // import assetRoute from './assets/assets.route';
 // import renderHtml from './render/render.controller';
 //Initialize App
@@ -39,6 +40,15 @@ mongoose.connect(
 );
 // app.use('/api/projects', projectRoute);
 app.use('/api/pages', pageRoute);
+app.get("/generateToken",(req,res)=>{
+  let response = request.get("http://localhost:5000/getToken");
+  res.send(response)
+})
+app.get("/getToken",(req,res)=>{
+  res.send("this is my token"+Math.random());
+})
+
+app.use('api/users',userRoute);
 // app.use('/api/assets', assetRoute);
 // app.use('/api/', uiRoute);
 // app.get('/:pageId?', renderHtml);
