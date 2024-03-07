@@ -40,15 +40,9 @@ mongoose.connect(
 );
 // app.use('/api/projects', projectRoute);
 app.use('/api/pages', pageRoute);
-app.get("/generateToken",(req,res)=>{
-  let response = request.get("http://localhost:5000/getToken");
-  res.send(response)
-})
-app.get("/getToken",(req,res)=>{
-  res.send("this is my token"+Math.random());
-})
 
-app.use('api/users',userRoute);
+
+app.use('/api/user', userRoute)
 // app.use('/api/assets', assetRoute);
 // app.use('/api/', uiRoute);
 // app.get('/:pageId?', renderHtml);

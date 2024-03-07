@@ -8,8 +8,12 @@ import {
   list,
   loadContent,
 } from '../Controllers/page.controller';
+import verifyToken from '../Middleware/Auth';
 
 const pageRoute = express.Router();
+
+pageRoute.use(verifyToken)
+
 pageRoute.post('/', create);
 pageRoute.post('/:pageId/content', changeContent);
 
