@@ -7,8 +7,8 @@ export const createPage = async (pageBody) => {
   const pageResponse = await page.save();
   return pageResponse;
 };
-export const listPages = async () => {
-  const pages = await Pages.find({});
+export const listPages = async (user_id) => {
+  const pages = await Pages.find({user_id});
   return pages;
 };
 export const deletePage = async (pageId) => {

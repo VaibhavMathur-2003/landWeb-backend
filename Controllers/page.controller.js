@@ -9,11 +9,14 @@ import {
 
 export const create = async (req, res) => {
   const pageBody = req.body;
+  const id = req.user._id;
+  pageBody.user_id = id;
   const page = await createPage(pageBody);
   res.json(page);
 };
 export const list = async (req, res) => {
-  const pages = await listPages();
+  const id = req.user._id;
+  const pages = await listPages(id);
   res.json(pages);
 };
 export const details = async (req, res) => {
