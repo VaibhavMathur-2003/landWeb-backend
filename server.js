@@ -4,6 +4,7 @@ import cors from 'cors';
 import path from 'path';
 // import uiRoute from './ui/ui.route';
 import pageRoute from './Routes/page.route';
+import contentRoute from './Routes/content.route.js';
 const userRoute = require('./Routes/user.route.js');
 // import assetRoute from './assets/assets.route';
 // import renderHtml from './render/render.controller';
@@ -40,6 +41,7 @@ mongoose.connect(
 );
 // app.use('/api/projects', projectRoute);
 app.use('/api/pages', pageRoute);
+app.use('/api/pages', contentRoute);
 
 
 app.use('/api/user', userRoute)

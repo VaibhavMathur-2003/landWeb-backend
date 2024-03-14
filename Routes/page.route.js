@@ -11,18 +11,18 @@ import {
 import verifyToken from '../Middleware/Auth';
 
 const pageRoute = express.Router();
+pageRoute.post('/:pageId/content', changeContent);
+pageRoute.get('/:pageId/content', loadContent);
+pageRoute.put('/:pageId', update);
 
 pageRoute.use(verifyToken)
 
 pageRoute.post('/', create);
-pageRoute.post('/:pageId/content', changeContent);
 
-pageRoute.put('/:pageId', update);
 
 pageRoute.delete('/:pageId', deletePageRecord);
 
 pageRoute.get('/:pageId', details);
 pageRoute.get('/', list);
-pageRoute.get('/:pageId/content', loadContent);
 
 export default pageRoute;
