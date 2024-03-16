@@ -41,7 +41,7 @@ mongoose.connect(
 );
 // app.use('/api/projects', projectRoute);
 app.use('/api/pages', pageRoute);
-app.use('/api/pages', contentRoute);
+app.use('/api/pages/build', contentRoute);
 
 
 app.use('/api/user', userRoute)
