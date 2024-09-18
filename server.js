@@ -2,31 +2,33 @@ import express from 'express';
 import mongoose from 'mongoose';
 import cors from 'cors';
 import path from 'path';
-// import uiRoute from './ui/ui.route';
 import pageRoute from './Routes/page.route';
 import contentRoute from './Routes/content.route.js';
 const userRoute = require('./Routes/user.route.js');
-// import assetRoute from './assets/assets.route';
-// import renderHtml from './render/render.controller';
-//Initialize App
+
+// Initialize App
 const app = express();
 app.use(express.json());
+
+// CORS configuration
 const corsOptions = {
-  origin: function (origin, callback) {
-    callback(null, true);
-  },
+  origin: ['https://landweb.netlify.app', 'http://localhost:3000'],
+  credentials: true,
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization']
 };
-app.use(cors({
-  origin: 'https://landweb.netlify.app'
-}));
-corsOptions.credentials = true;
+
 app.use(cors(corsOptions));
 
-//HTML and Static file
+// Handle preflight requests
+app.options('*', cors(corsOptions));
+
+// HTML and Static file
 app.use('/resources', express.static(path.join(__dirname, 'public')));
 app.set('views', `views`);
 app.set('view engine', 'hbs');
 
+// MongoDB connection
 const mongoUri = process.env.MONGO_URI;
 mongoose.connect(
   mongoUri,
@@ -41,18 +43,14 @@ mongoose.connect(
     console.log('Connected to MongoDB');
   },
 );
-// app.use('/api/projects', projectRoute);
+
+// Routes
 app.use('/api/pages', pageRoute);
 app.use('/api/pages/build', contentRoute);
+app.use('/api/user', userRoute);
 
-
-app.use('/api/user', userRoute)
-// app.use('/api/assets', assetRoute);
-// app.use('/api/', uiRoute);
-// app.get('/:pageId?', renderHtml);
-
+// Start server
 const PORT = process.env.APP_PORT || 5000;
 app.listen(PORT, () => {
   console.log(`server is running on port ${PORT}`);
 });
-
