@@ -11,17 +11,34 @@ const app = express();
 app.use(express.json());
 
 // CORS configuration
+const allowedOrigins = [
+  'https://landweb.netlify.app', 
+  'http://localhost:3000', 
+  'https://dropitweb.vercel.app'
+];
+
 const corsOptions = {
-  origin: ['https://landweb.netlify.app', 'http://localhost:3000', 'https://dropitweb.vercel.app/signin'],
+  origin: function (origin, callback) {
+    // Allow requests with no origin (like mobile apps, postman, etc.)
+    if (!origin) return callback(null, true);
+
+    // Check if the incoming origin is allowed
+    if (allowedOrigins.indexOf(origin) !== -1) {
+      callback(null, true);
+    } else {
+      callback(new Error('Not allowed by CORS'));
+    }
+  },
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-  allowedHeaders: ['Content-Type', 'Authorization']
+  allowedHeaders: ['Content-Type', 'Authorization'],
+  preflightContinue: true
 };
 
 app.use(cors(corsOptions));
 
 // Handle preflight requests
-app.options('*', cors(corsOptions));
+app.options('*', cors(corsOptions));  // Ensure preflight is handled for all routes
 
 // HTML and Static file
 app.use('/resources', express.static(path.join(__dirname, 'public')));
