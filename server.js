@@ -12,7 +12,7 @@ app.use(express.json());
 
 // CORS configuration
 const corsOptions = {
-  origin: ['https://landweb.netlify.app', 'http://localhost:3000'],
+  origin: ['https://landweb.netlify.app', 'http://localhost:3000', 'https://dropitweb.vercel.app/signin'],
   credentials: true,
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
   allowedHeaders: ['Content-Type', 'Authorization']
