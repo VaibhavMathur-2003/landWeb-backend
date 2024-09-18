@@ -16,7 +16,9 @@ const corsOptions = {
     callback(null, true);
   },
 };
-
+app.use(cors({
+  origin: 'https://landweb.netlify.app'
+}));
 corsOptions.credentials = true;
 app.use(cors(corsOptions));
 
